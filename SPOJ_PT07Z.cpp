@@ -22,6 +22,7 @@ namespace cp {
         visited[src] = true;
         dist[src] = 0;
         q.push(src);
+        
         while (!q.empty()) {
             int u = q.front();
             q.pop();
@@ -47,10 +48,9 @@ namespace cp {
             g[u].push_back(v);
             g[v].push_back(u);
         }
-
     }
 
-    int find_max() {
+    int find_argmax() {
         return std::distance(dist.begin(), 
             std::max_element(dist.begin(), dist.end()));
     }
@@ -58,12 +58,10 @@ namespace cp {
     void run() {
         take_input();
         bfs(0);
-        bfs(find_max());
+        bfs(find_argmax());
 
-        std::cout << dist[find_max()];
-
+        std::cout << dist[find_argmax()];
     }
-    
 }
 
 

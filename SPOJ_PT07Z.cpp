@@ -5,21 +5,42 @@
 #include <stack>
 #include <functional>
 #include <algorithm>
+#include <limits>
+#include <bitset>
+
 
 typedef long long int64;
 
+namespace cp_utitls {
+    template<class T>
+    int argmax(const std::vector<T>& vec) {
+        return std::distance(vec.begin(), 
+            std::max_element(vec.begin(), vec.end()));
+    }
+}
+
 namespace cp {
+    using cp_utitls::argmax;
+    const int INF_INT = std::numeric_limits<int>::max()/4; // C++14
+    const int MAX_NODES = 10'000 + 100;
     int n;
-    const int INF_INT = 1'000'000'000;
     std::vector<std::vector<int> > g;
-    std::vector<bool> visited;
+    // std::vector<bool> visited;
+    std::bitset<MAX_NODES>visited;
     std::vector<int> dist;
+    
+    void add_edge(int u, int v, bool directed=false) {
+        g[u].emplace_back(v);
+        if (!directed) {
+            g[v].emplace_back(u);
+        }
+    }
 
     void bfs(int src) {
-        visited.assign(n, false);
+        visited.reset(); // visited.assign(n, false);
         dist.assign(n, INF_INT);
         std::queue<int> q;
-        visited[src] = true;
+        visited.set(src); // visited[src] = true;
         dist[src] = 0;
         q.push(src);
         
@@ -27,10 +48,12 @@ namespace cp {
             int u = q.front();
             q.pop();
 
-            for (auto& v: g[u]) {
-                if (visited[v] == false) {
+            for (const auto& v: g[u]) {
+                // if (visited[v] == false) {
+                if (visited.test(v) == false) { 
                     dist[v] = dist[u] + 1;
-                    visited[v] = true;
+                    // visited[v] = true;
+                    visited.set(v);
                     q.push(v);
                 }
             }
@@ -45,22 +68,16 @@ namespace cp {
             std::cin >> u >> v;
             --u;
             --v;
-            g[u].push_back(v);
-            g[v].push_back(u);
+            add_edge(u, v);
         }
     }
-
-    int find_argmax() {
-        return std::distance(dist.begin(), 
-            std::max_element(dist.begin(), dist.end()));
-    }
+    
 
     void run() {
         take_input();
         bfs(0);
-        bfs(find_argmax());
-
-        std::cout << dist[find_argmax()];
+        bfs(argmax(dist));
+        std::cout << dist[argmax(dist)];
     }
 }
 
@@ -69,6 +86,19 @@ namespace cp {
 int main() {
     cp::run();
 
-
     return 0;
 }
+
+
+
+/*
+Test Case: 1
+Input:
+3
+1 2
+2 3
+
+Output:
+2
+
+*/

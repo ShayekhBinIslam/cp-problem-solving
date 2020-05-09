@@ -11,7 +11,7 @@
 
 typedef long long int64;
 
-namespace cp_utitls {
+namespace cp_utils {
     template<class T>
     int argmax(const std::vector<T>& vec) {
         return std::distance(vec.begin(), 
@@ -72,7 +72,6 @@ namespace cp {
         }
     }
     
-
     void run() {
         take_input();
         bfs(0);
@@ -81,14 +80,11 @@ namespace cp {
     }
 }
 
-
-
 int main() {
     cp::run();
 
     return 0;
 }
-
 
 
 /*

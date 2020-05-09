@@ -20,9 +20,9 @@ namespace cp_utils {
 }
 
 namespace cp {
-    using cp_utitls::argmax;
-    const int INF_INT = std::numeric_limits<int>::max()/4; // C++14
-    const int MAX_NODES = 10'000 + 100;
+    using cp_utils::argmax;
+    const int INF_INT = std::numeric_limits<int>::max()/4;
+    const int MAX_NODES = 10'000 + 100; // C++14: 10'000
     int n;
     std::vector<std::vector<int> > g;
     // std::vector<bool> visited;

@@ -8,9 +8,6 @@
 #include <limits>
 #include <bitset>
 
-
-typedef long long int64;
-
 namespace cp_utils {
     template<class T>
     int argmax(const std::vector<T>& vec) {
@@ -21,40 +18,48 @@ namespace cp_utils {
 
 namespace cp {
     using cp_utils::argmax;
-    const int INF_INT = std::numeric_limits<int>::max()/4;
+    const int INF_INT = std::numeric_limits<int>::max() / 4;
     const int MAX_NODES = 10'000 + 100; // C++14: 10'000
+    typedef int VERTEX_T;
     int n;
-    std::vector<std::vector<int> > g;
+    std::vector<std::vector<VERTEX_T> > g;
     // std::vector<bool> visited;
     std::bitset<MAX_NODES>visited;
     std::vector<int> dist;
+    std::queue<VERTEX_T> q;
     
-    void add_edge(int u, int v, bool directed=false) {
+    void add_edge(VERTEX_T u, VERTEX_T v, bool directed=false) {
         g[u].emplace_back(v);
         if (!directed) {
             g[v].emplace_back(u);
         }
     }
-
-    void bfs(int src) {
+    
+    void mark_n_push(const VERTEX_T vertex) {
+        visited.set(vertex); // visited[src] = true;
+        q.emplace(vertex);
+    }
+    
+    void bfs_ds_init() {
         visited.reset(); // visited.assign(n, false);
         dist.assign(n, INF_INT);
-        std::queue<int> q;
-        visited.set(src); // visited[src] = true;
+        q = std::queue<VERTEX_T>();
+    }
+
+    void bfs(const VERTEX_T src) {
+        bfs_ds_init();
         dist[src] = 0;
-        q.push(src);
+        mark_n_push(src);
         
         while (!q.empty()) {
-            int u = q.front();
+            VERTEX_T u = q.front();
             q.pop();
 
-            for (const auto& v: g[u]) {
+            for (const VERTEX_T& v: g[u]) {
                 // if (visited[v] == false) {
                 if (visited.test(v) == false) { 
                     dist[v] = dist[u] + 1;
-                    // visited[v] = true;
-                    visited.set(v);
-                    q.push(v);
+                    mark_n_push(v);
                 }
             }
         }
@@ -62,21 +67,23 @@ namespace cp {
 
     void take_input() {
         std::cin >> n;
-        g.assign(n, std::vector<int>());
+        g.assign(n, std::vector<VERTEX_T>());
         for (int i = 0; i < n-1; ++i) {
-            int u, v;
+            VERTEX_T u, v;
             std::cin >> u >> v;
-            --u;
-            --v;
-            add_edge(u, v);
+            add_edge(--u, --v);
         }
+    }
+    
+    void print_output() {
+        std::cout << dist[argmax(dist)];
     }
     
     void run() {
         take_input();
         bfs(0);
         bfs(argmax(dist));
-        std::cout << dist[argmax(dist)];
+        print_output();
     }
 }
 

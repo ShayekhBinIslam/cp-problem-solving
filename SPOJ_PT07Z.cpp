@@ -10,9 +10,9 @@
 
 namespace cp_utils {
     template<class T>
-    int argmax(const std::vector<T>& vec) {
-        return std::distance(vec.begin(), 
-            std::max_element(vec.begin(), vec.end()));
+    int argmax(const std::vector<T>& v) {
+        return std::distance(v.begin(), 
+            std::max_element(v.begin(), v.end()));
     }
 }
 
@@ -24,7 +24,7 @@ namespace cp {
     int n;
     std::vector<std::vector<VERTEX_T> > g;
     // std::vector<bool> visited;
-    std::bitset<MAX_NODES>visited;
+    std::bitset<MAX_NODES> visited;
     std::vector<int> dist;
     std::queue<VERTEX_T> q;
     
@@ -56,8 +56,8 @@ namespace cp {
             q.pop();
 
             for (const VERTEX_T& v: g[u]) {
-                // if (visited[v] == false) {
-                if (visited.test(v) == false) { 
+                // if (!visited[v]) {
+                if (!visited.test(v)) { 
                     dist[v] = dist[u] + 1;
                     mark_n_push(v);
                 }

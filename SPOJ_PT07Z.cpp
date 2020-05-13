@@ -1,12 +1,13 @@
 #include <iostream>
-#include <vector>
 #include <utility>
-#include <queue>
-#include <stack>
 #include <functional>
 #include <algorithm>
 #include <limits>
+#include <vector>
+#include <queue>
+#include <stack>
 #include <bitset>
+
 
 namespace cp_utils {
     template<class T>

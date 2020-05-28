@@ -23,8 +23,7 @@ namespace cp {
     const int MAX_NODES = 10'000 + 100; // C++14: 10'000
     typedef int VERTEX_T;
     int n;
-    std::vector<std::vector<VERTEX_T> > g;
-    // std::vector<bool> visited;
+    std::vector<std::vector<VERTEX_T> > g; // std::vector<bool> visited;
     std::bitset<MAX_NODES> visited;
     std::vector<int> dist;
     std::queue<VERTEX_T> q;
@@ -37,7 +36,7 @@ namespace cp {
     }
     
     void mark_n_push(const VERTEX_T vertex) {
-        visited.set(vertex); // visited[src] = true;
+        visited.set(vertex); // visited[vertex] = true;
         q.emplace(vertex);
     }
     
@@ -77,7 +76,7 @@ namespace cp {
     }
     
     void print_output() {
-        std::cout << dist[argmax(dist)];
+        std::cout << *std::max_element(dist.begin(), dist.end());
     }
     
     void run() {
@@ -101,8 +100,6 @@ Input:
 3
 1 2
 2 3
-
 Output:
 2
-
 */

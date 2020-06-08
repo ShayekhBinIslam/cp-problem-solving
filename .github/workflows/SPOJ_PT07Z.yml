@@ -13,14 +13,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: configure environment
+      run: export NAME=SPOJ_PT07Z && export NUM=1
+      
     - name: SPOJ_PT07Z
-      run: g++ "{{name}}".cpp
+      run: g++ "$NAME".cpp
     - name: produce output
-      run: ./a.out < ./test_cases/SPOJ_PT07Z_1_in.txt > ./SPOJ_PT07Z_1_run.txt
+      run: ./a.out < ./test_cases/"$NAME"_"$NUM"_in.txt > ./"$NAME"_"$NUM"_run.txt
     - name: show output
-      run: echo "produced:" && cat ./SPOJ_PT07Z_1_run.txt && echo "expected:" && cat ./test_cases/SPOJ_PT07Z_1_out.txt
+      run: echo "input:" && cat ./test_cases/"$NAME"_"$NUM"_in.txt && echo "produced:" && cat ./"$NAME"_"$NUM"_run.txt && echo "expected:" && cat ./test_cases/"$NAME"_"$NUM"_out.txt
     - name: difference
-      run: diff ./SPOJ_PT07Z_1_run.txt ./test_cases/SPOJ_PT07Z_1_out.txt
+      run: diff ./"$NAME"_"$NUM"_run.txt ./test_cases/"$NAME"_"$NUM"_out.txt
 #     - name: configure
 #       run: ./configure
 #     - name: make

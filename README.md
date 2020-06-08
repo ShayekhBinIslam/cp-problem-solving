@@ -8,8 +8,8 @@ Firstly write your brute force solution and then try to optimize it as much as u
 
 # Problems
 ### Graph Theory
-| Problem | Solution | Difficulty | Skills|
-|-|-|-|-|
-| [PT07Z - Longest path in a tree](https://www.spoj.com/problems/PT07Z/) | [Link](./SPOJ_PT07Z.cpp) | Easy | BFS, Data Structures (bitset, vector, queue), STL Algorithm(distance, max_element), Numeric Limits |
-| Placeholder | Placeholder | Placeholder | Placeholder |
-| Placeholder | Placeholder | Placeholder | Placeholder |
+| Problem | Solution | Difficulty | Skills| Build Status |
+|-|-|-|-|-|
+| [PT07Z - Longest path in a tree](https://www.spoj.com/problems/PT07Z/) | [Link](./SPOJ_PT07Z.cpp) | Easy | BFS, Data Structures (bitset, vector, queue), STL Algorithm(distance, max_element), Numeric Limits | ![](https://github.com/ShayekhBinIslam/cp-problem-solving/workflows/SPOJ_PT07Z/badge.svg)
+| Placeholder | Placeholder | Placeholder | Placeholder | Placeholder |
+| Placeholder | Placeholder | Placeholder | Placeholder | Placeholder |

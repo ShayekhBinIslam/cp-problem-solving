@@ -77,6 +77,7 @@ namespace cp {
     
     void print_output() {
         std::cout << *std::max_element(dist.begin(), dist.end());
+        std::cout << '\n'; # Standard pratice, ending with a blank line.
     }
     
     void run() {

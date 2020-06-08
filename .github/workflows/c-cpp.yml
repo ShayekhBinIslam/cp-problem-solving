@@ -17,6 +17,8 @@ jobs:
       run: g++ SPOJ_PT07Z.cpp
     - name: produce output
       run: ./a.out < ./test_cases/SPOJ_PT07Z_1_in.txt > ./SPOJ_PT07Z_1_run.txt
+    - name: show output
+      run: echo "produced:" && cat ./SPOJ_PT07Z_1_run.txt && echo "expected:" && cat ./test_cases/SPOJ_PT07Z_1_out.txt
     - name: difference
       run: diff ./SPOJ_PT07Z_1_run.txt ./test_cases/SPOJ_PT07Z_1_out.txt
 #     - name: configure

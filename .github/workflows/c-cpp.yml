@@ -13,11 +13,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: configure
-      run: ./configure
-    - name: make
-      run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
+    - name: SPOJ_PT07Z
+      run: g++ SPOJ_PT07Z.cpp
+    - name: check_output
+      run: ./a.out < test_cases/SPOJ_PT07Z_1_in.txt > SPOJ_PT07Z_1_run.txt
+#     - name: configure
+#       run: ./configure
+#     - name: make
+#       run: make
+#     - name: make check
+#       run: make check
+#     - name: make distcheck
+#       run: make distcheck
+

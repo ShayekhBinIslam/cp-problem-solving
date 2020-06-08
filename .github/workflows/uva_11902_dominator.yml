@@ -27,9 +27,12 @@ jobs:
       run: ./a.out < ./test_cases/$(cat NAME)_$(cat NUM)_in.txt > ./$(cat NAME)_$(cat NUM)_run.txt
     - name: show output
       run: |
-        echo "input:" && cat ./test_cases/$(cat NAME)_$(cat NUM)_in.txt
-        echo "produced:" && cat ./$(cat NAME)_$(cat NUM)_run.txt
-        echo "expected:" && cat ./test_cases/$(cat NAME)_$(cat NUM)_out.txt
+        echo ""
+        echo "========input========" && cat ./test_cases/$(cat NAME)_$(cat NUM)_in.txt
+        echo ""
+        echo "========produced========" && cat ./$(cat NAME)_$(cat NUM)_run.txt
+        echo ""
+        echo "========expected========" && cat ./test_cases/$(cat NAME)_$(cat NUM)_out.txt
     - name: difference
       run: diff ./$(cat NAME)_$(cat NUM)_run.txt ./test_cases/$(cat NAME)_$(cat NUM)_out.txt
 #     - name: configure

@@ -24,10 +24,11 @@ namespace cp {
     }
 
     void dfs(int src, std::bitset<MAX_NODES>& visited, int dest=-1) {
-        visited.set(src);
         if (src == dest) {
                 return;
         }
+        visited.set(src);
+        
         for (int i = 0; i < n; ++i) {
             if (AdjMat[src][i] && !visited.test(i)) {
                 dfs(i, visited, dest);
@@ -49,7 +50,7 @@ namespace cp {
 
     inline bool satisfy(int i, int j) {
         return visited_init.test(j) &&
-            (!visited_later.test(j) || (j == i));
+            (!visited_later.test(j));
     }
 
     void solve() {

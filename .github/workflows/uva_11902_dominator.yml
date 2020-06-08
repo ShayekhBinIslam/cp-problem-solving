@@ -1,0 +1,42 @@
+name: uva_11902_dominator
+# acknowledgement: https://github.com/firepress-org/rclone-in-docker/blob/master/.github/workflows/ci_dockerfile_is_master.yml
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'test_cases/uva_11902_dominator*'
+      - '.github/workflows/uva_11902_dominator*'
+      - 'uva_11902_dominator*' 
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: setup env
+      run: |
+        echo uva_11902_dominator > NAME
+        echo 1 > NUM
+    - name: uva_11902_dominator
+      run: g++ ./$(cat NAME).cpp
+    - name: produce output
+      run: ./a.out < ./test_cases/$(cat NAME)_$(cat NUM)_in.txt > ./$(cat NAME)_$(cat NUM)_run.txt
+    - name: show output
+      run: |
+        echo "input:" && cat ./test_cases/$(cat NAME)_$(cat NUM)_in.txt
+        echo "produced:" && cat ./$(cat NAME)_$(cat NUM)_run.txt
+        echo "expected:" && cat ./test_cases/$(cat NAME)_$(cat NUM)_out.txt
+    - name: difference
+      run: diff ./$(cat NAME)_$(cat NUM)_run.txt ./test_cases/$(cat NAME)_$(cat NUM)_out.txt
+#     - name: configure
+#       run: ./configure
+#     - name: make
+#       run: make
+#     - name: make check
+#       run: make check
+#     - name: make distcheck
+#       run: make distcheck

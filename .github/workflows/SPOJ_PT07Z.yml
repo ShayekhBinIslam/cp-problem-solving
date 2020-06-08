@@ -1,4 +1,4 @@
-name: C/C++ CI
+name: SPOJ_PT07Z
 
 on:
   push:

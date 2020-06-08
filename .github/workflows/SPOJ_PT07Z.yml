@@ -1,4 +1,5 @@
 name: SPOJ_PT07Z
+# acknowledgement: https://github.com/firepress-org/rclone-in-docker/blob/master/.github/workflows/ci_dockerfile_is_master.yml
 
 on:
   push:
@@ -10,20 +11,23 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
-    - name: configure environment
-      run: export NAME=SPOJ_PT07Z && export NUM=1
-      
+    - name: setup env
+      run: |
+        echo SPOJ_PT07Z > NAME
+        echo 1 > NUM
     - name: SPOJ_PT07Z
-      run: g++ "$NAME".cpp
+      run: g++ ./$(cat NAME).cpp
     - name: produce output
-      run: ./a.out < ./test_cases/"$NAME"_"$NUM"_in.txt > ./"$NAME"_"$NUM"_run.txt
+      run: ./a.out < ./test_cases/$(cat NAME)_$(cat NUM)_in.txt > ./$(cat NAME)_$(cat NUM)_run.txt
     - name: show output
-      run: echo "input:" && cat ./test_cases/"$NAME"_"$NUM"_in.txt && echo "produced:" && cat ./"$NAME"_"$NUM"_run.txt && echo "expected:" && cat ./test_cases/"$NAME"_"$NUM"_out.txt
+      run: |
+        echo "input:" && cat ./test_cases/$(cat NAME)_$(cat NUM)_in.txt
+        echo "produced:" && cat ./$(cat NAME)_$(cat NUM)_run.txt
+        echo "expected:" && cat ./test_cases/$(cat NAME)_$(cat NUM)_out.txt
     - name: difference
-      run: diff ./"$NAME"_"$NUM"_run.txt ./test_cases/"$NAME"_"$NUM"_out.txt
+      run: diff ./$(cat NAME)_$(cat NUM)_run.txt ./test_cases/$(cat NAME)_$(cat NUM)_out.txt
 #     - name: configure
 #       run: ./configure
 #     - name: make

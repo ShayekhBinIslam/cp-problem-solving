@@ -5,9 +5,9 @@ on:
   push:
     branches: [ master ]
     paths:
-      - './test_cases/SPOJ_PT07Z*'
-      - './.github/workflows/SPOJ_PT07Z*'
-      - './SPOJ_PT07Z*' 
+      - 'test_cases/SPOJ_PT07Z*'
+      - '.github/workflows/SPOJ_PT07Z*'
+      - 'SPOJ_PT07Z*' 
   pull_request:
     branches: [ master ]
 

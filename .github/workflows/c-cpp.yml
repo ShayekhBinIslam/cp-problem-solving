@@ -17,7 +17,7 @@ jobs:
       run: g++ SPOJ_PT07Z.cpp
     - name: check_output
       run: ./a.out < ./test_cases/SPOJ_PT07Z_1_in.txt > ./SPOJ_PT07Z_1_run.txt
-    - name: diff
+    - name: difference
       run: diff ./SPOJ_PT07Z_1_run.txt ./test_cases/SPOJ_PT07Z_1_out.txt
 #     - name: configure
 #       run: ./configure

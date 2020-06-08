@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: SPOJ_PT07Z
-      run: g++ SPOJ_PT07Z.cpp
+      run: g++ "{{name}}".cpp
     - name: produce output
       run: ./a.out < ./test_cases/SPOJ_PT07Z_1_in.txt > ./SPOJ_PT07Z_1_run.txt
     - name: show output

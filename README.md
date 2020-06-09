@@ -8,8 +8,8 @@ Firstly write your brute force solution and then try to optimize it as much as u
 
 # Problems
 ### Graph Theory
-| Problem | Solution | Difficulty | Skills| Build Status |
-|-|-|-|-|-|
-| [SPOJ PT07Z - Longest path in a tree](https://www.spoj.com/problems/PT07Z/) | [Link](./SPOJ_PT07Z.cpp) | Easy | BFS, Data Structures (bitset, vector, queue), STL Algorithm(distance, max_element), Numeric Limits | ![](https://github.com/ShayekhBinIslam/cp-problem-solving/workflows/SPOJ_PT07Z/badge.svg) |
-| [UVa 11902 - Dominator](https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=3053) | [Link](./uva_11902_dominator.cpp) | Easy | DFS, ... |  ![](https://github.com/ShayekhBinIslam/cp-problem-solving/workflows/UVa_11902/badge.svg)  |
-| Placeholder | Placeholder | Placeholder | Placeholder | Placeholder |
+| Problem | Solution | Difficulty | Skills|
+|-|-|-|-|
+| [SPOJ PT07Z - Longest path in a tree](https://www.spoj.com/problems/PT07Z/) | [Link](./SPOJ_PT07Z.cpp) ![](https://github.com/ShayekhBinIslam/cp-problem-solving/workflows/SPOJ_PT07Z/badge.svg) | Easy | BFS, Data Structures (bitset, vector, queue), STL Algorithm(distance, max_element), Numeric Limits |
+| [UVa 11902 - Dominator](https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=3053) | [Link](./uva_11902_dominator.cpp) ![](https://github.com/ShayekhBinIslam/cp-problem-solving/workflows/UVa_11902/badge.svg) | Easy | DFS, ... |
+| Placeholder | Placeholder | Placeholder | Placeholder |

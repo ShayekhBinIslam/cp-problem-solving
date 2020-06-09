@@ -24,19 +24,32 @@ jobs:
     - name: uva_11838
       run: g++ ./$(cat NAME).cpp
     - name: produce output
-      run: ./a.out < ./test_cases/$(cat NAME)_$(cat NUM)_in.txt > ./$(cat NAME)_$(cat NUM)_run.txt
+      run: |
+        cases=0
+        for file in test_cases/$(cat NAME)_*_in.txt; do
+          cases=$((cases+1))
+          ./a.out < file > ./$(cat NAME)_${cases}_run.txt
+        done
+        
     - name: show output
       run: |
-        echo "input:" && cat ./test_cases/$(cat NAME)_$(cat NUM)_in.txt
-        echo "produced:" && cat ./$(cat NAME)_$(cat NUM)_run.txt
-        echo "expected:" && cat ./test_cases/$(cat NAME)_$(cat NUM)_out.txt
+        cases=0
+        for file in test_cases/$(cat NAME)_*_in.txt; do
+          cases=$((cases+1))
+          echo "Case ${cases}:"
+          echo "==========input========:" && cat file
+          echo ""
+          echo "========produced=======:" && cat ./$(cat NAME)_${cases}_run.txt
+          echo ""
+          echo "========expected=======:" && cat ./test_cases/$(cat NAME)_${cases}_out.txt
+          echo ""
+          echo "======================="
+        done
     - name: difference
-      run: diff ./$(cat NAME)_$(cat NUM)_run.txt ./test_cases/$(cat NAME)_$(cat NUM)_out.txt
-#     - name: configure
-#       run: ./configure
-#     - name: make
-#       run: make
-#     - name: make check
-#       run: make check
-#     - name: make distcheck
-#       run: make distcheck
+      run: |
+        cases=0
+        for file in test_cases/$(cat NAME)_*_in.txt; do
+          cases=$((cases+1))
+          diff ./$(cat NAME)_${cases}_run.txt ./test_cases/$(cat NAME)_${cases}_out.txt
+        done
+

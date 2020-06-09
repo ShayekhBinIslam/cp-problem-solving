@@ -28,7 +28,7 @@ jobs:
         cases=0
         for file in test_cases/$(cat NAME)_*_in.txt; do
           cases=$((cases+1))
-          ./a.out < file > ./$(cat NAME)_${cases}_run.txt
+          ./a.out < ./$file > ./$(cat NAME)_${cases}_run.txt
         done
         
     - name: show output

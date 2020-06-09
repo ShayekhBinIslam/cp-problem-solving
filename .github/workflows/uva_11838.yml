@@ -26,18 +26,18 @@ jobs:
     - name: produce output
       run: |
         cases=0
-        for file in test_cases/$(cat NAME)_*_in.txt; do
+        for file in ./test_cases/$(cat NAME)_*_in.txt; do
           cases=$((cases+1))
-          ./a.out < ./$file > ./$(cat NAME)_${cases}_run.txt
+          ./a.out < $file > ./$(cat NAME)_${cases}_run.txt
         done
         
     - name: show output
       run: |
         cases=0
-        for file in test_cases/$(cat NAME)_*_in.txt; do
+        for file in ./test_cases/$(cat NAME)_*_in.txt; do
           cases=$((cases+1))
           echo "Case ${cases}:"
-          echo "==========input========:" && cat file
+          echo "==========input========:" && cat $file
           echo ""
           echo "========produced=======:" && cat ./$(cat NAME)_${cases}_run.txt
           echo ""

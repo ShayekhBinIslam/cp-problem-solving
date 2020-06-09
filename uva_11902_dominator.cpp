@@ -48,9 +48,8 @@ namespace cp {
         std::cout << "+\n";
     }
 
-    inline bool satisfy(int i, int j) {
-        return visited_init.test(j) &&
-            (!visited_later.test(j));
+    inline bool is_dominating(int i, int j) {
+        return visited_init.test(j) && !visited_later.test(j);
     }
 
     void solve() {
@@ -63,8 +62,7 @@ namespace cp {
             dfs(0, visited_later, i);
             std::cout << '|';
             for (int j = 0; j < n; ++j) {
-                std::cout << (
-                    satisfy(i, j) ? 'Y': 'N');
+                std::cout << (is_dominating(i, j) ? 'Y': 'N');
                 std::cout << '|';
             }
             std::cout << '\n';

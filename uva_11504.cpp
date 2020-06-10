@@ -7,6 +7,7 @@
 #include <queue>
 #include <stack>
 #include <bitset>
+#include <map>
 
 namespace cp {
     const int UNVISITED = -1;
@@ -16,6 +17,7 @@ namespace cp {
     std::vector<int> dfs_low, dfs_num;
     std::vector<bool> visited;
     std::stack<int> s;
+    std::map<int, std::vector<int>> scss;
 
     int dfs_number_counter, scc_counter;
     int answer = 0;
@@ -28,6 +30,7 @@ namespace cp {
         dfs_number_counter = 0;
         s = std::stack<int>();
         scc_counter = 0;
+        scss = std::map<int, std::vector<int>>();
     }
 
     void add_edge(int u, int v, bool directed=false) {
@@ -37,12 +40,13 @@ namespace cp {
             g[v].emplace_back(u);
         }
     }
-    
+
     void take_input() {
+        int u, v;
         for (int i = 0; i < m; ++i) {
-            int u, v, p; 
-            std::cin >> u >> v >> p;
-            add_edge(--u, --v, p == 1);
+            std::cin >> u >> v;
+            // std::cout << u << " " << v << '\n';
+            add_edge(--u, --v, true);
         }
     }
 
@@ -64,9 +68,18 @@ namespace cp {
                 v = s.top();
                 s.pop();
                 visited[v] = false;
+                scss[scc_counter].push_back(v);
                 if (u == v) break;
             }
             ++scc_counter;
+        }
+    }
+
+    void vanilla_dfs(int src) {
+        visited[src] = true;
+        for (auto& v: g[src]) {
+            if (!visited[v])
+                vanilla_dfs(v);
         }
     }
 
@@ -75,8 +88,30 @@ namespace cp {
             if (dfs_num[i] == UNVISITED)
                 scc_tarjan(i);
         }
-        answer = int(scc_counter == 1);
+        answer = 0;
+        // std::cout << "sccs:\n";
+        // for (auto& v: scss) {
+        //     std::cout << v.first << ": ";
+        //     for (auto& k: v.second) {
+        //         std::cout << k+1 << " ";
+        //     }
+        //     std::cout << '\n';
+        // }
+        for (auto it = scss.rbegin(); it != scss.rend(); ++it) {
+            auto& v = *it;
+            // std::cout << v.first << ": ";
+            for (auto& k: v.second) {
+                // std::cout << k+1 << " ";
+                if (!visited[k]) {
+                    vanilla_dfs(k);
+                    ++answer;
+                }   
+            }
+            // std::cout << '\n';
+        }
     }
+
+
     
     void print_output() {
         std::cout << answer << "\n";
@@ -84,6 +119,7 @@ namespace cp {
 
 
     void one_loop() {
+        std::cin >> n >> m;
         init();
         take_input();
         solve();
@@ -92,11 +128,9 @@ namespace cp {
     
     void run() {
         int T = 1; 
-        // std::cin >> T;
-        for ( ; ; ) {
+        std::cin >> T;
+        for (int i = 0; i < T; ++i) {
             // std::cout << "Case " << (i+1) << ":\n";
-            std::cin >> n >> m;
-            if (n == 0 && m == 0) break;
             one_loop();
         }
     }
@@ -111,7 +145,7 @@ int main() {
 
 /*
 Run: 
-g++ uva_11838.cpp && a < test_cases/uva_11838_1_in.txt
+g++ uva_11504.cpp && ./a < test_cases/uva_11504_1_in.txt
 
 Test Case: 1
 Input:

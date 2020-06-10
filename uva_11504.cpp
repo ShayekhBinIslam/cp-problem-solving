@@ -7,7 +7,6 @@
 #include <queue>
 #include <stack>
 #include <bitset>
-#include <map>
 
 namespace cp {
     const int UNVISITED = -1;
@@ -17,7 +16,7 @@ namespace cp {
     std::vector<int> dfs_low, dfs_num;
     std::vector<bool> visited;
     std::stack<int> s;
-    std::map<int, std::vector<int>> scss;
+    std::vector<std::vector<int> > SCCs;
 
     int dfs_number_counter, scc_counter;
     int answer = 0;
@@ -30,7 +29,7 @@ namespace cp {
         dfs_number_counter = 0;
         s = std::stack<int>();
         scc_counter = 0;
-        scss = std::map<int, std::vector<int>>();
+        SCCs = std::vector<std::vector<int> >();
     }
 
     void add_edge(int u, int v, bool directed=false) {
@@ -64,14 +63,16 @@ namespace cp {
 
         if (dfs_num[u] == dfs_low[u]) {
             int v;
+            std::vector<int> current_ssc;
             while (true) {
                 v = s.top();
                 s.pop();
                 visited[v] = false;
-                scss[scc_counter].push_back(v);
+                current_ssc.push_back(v);
                 if (u == v) break;
             }
             ++scc_counter;
+            SCCs.push_back(current_ssc);
         }
     }
 
@@ -89,18 +90,10 @@ namespace cp {
                 scc_tarjan(i);
         }
         answer = 0;
-        // std::cout << "sccs:\n";
-        // for (auto& v: scss) {
-        //     std::cout << v.first << ": ";
-        //     for (auto& k: v.second) {
-        //         std::cout << k+1 << " ";
-        //     }
-        //     std::cout << '\n';
-        // }
-        for (auto it = scss.rbegin(); it != scss.rend(); ++it) {
+
+        for (auto it = SCCs.rbegin(); it != SCCs.rend(); ++it) {
             auto& v = *it;
-            // std::cout << v.first << ": ";
-            for (auto& k: v.second) {
+            for (auto& k: v) {
                 // std::cout << k+1 << " ";
                 if (!visited[k]) {
                     vanilla_dfs(k);
@@ -111,12 +104,9 @@ namespace cp {
         }
     }
 
-
-    
     void print_output() {
         std::cout << answer << "\n";
     }
-
 
     void one_loop() {
         std::cin >> n >> m;

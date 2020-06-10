@@ -55,7 +55,7 @@ int main() {
 
 /*
 Run: 
-g++ ___.cpp && a < test_cases/____1_in.txt
+g++ ___.cpp && ./a < test_cases/____1_in.txt
 
 Test Case: 1
 Input:

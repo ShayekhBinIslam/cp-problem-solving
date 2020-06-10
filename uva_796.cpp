@@ -1,5 +1,4 @@
 #include <iostream>
-#include <sstream>
 #include <utility>
 #include <functional>
 #include <algorithm>
@@ -8,13 +7,14 @@
 #include <queue>
 #include <stack>
 #include <bitset>
+#include <sstream>
 #include <numeric>
 
 namespace cp {
     int n = 0;
     std::vector<std::vector<int> > g;
     std::vector<int> dfs_low, dfs_num, dfs_parent;
-    std::vector<bool> articulation_vertex;
+    std::vector<std::pair<int, int>> articulation_bridge;
     int dfs_number_counter, root_children, dfs_root;
     const int NIL = -1;
     const int UNIVISITED = -1;
@@ -24,7 +24,7 @@ namespace cp {
     void init() {
         g.assign(n, std::vector<int>());
         dfs_low.assign(n, 0);
-        articulation_vertex.assign(n, false);
+        articulation_bridge = std::vector<std::pair<int, int>>();
         dfs_num.assign(n, UNIVISITED);
         dfs_parent.assign(n, NIL);
         dfs_number_counter = 0;
@@ -52,24 +52,28 @@ namespace cp {
     }
     
     void take_input() {
-        int u, v;
+        int u = -1, v, m = -1;
+        // std::cout << "N: " << n << '\n';
+        char c;
         std::string line;
+        getline(std::cin, line);
+        if (n == 0) {
+            return;
+        }
         while (getline(std::cin, line)) {
-            // std::cout << "line: " << line << '\n';
-            if (line[0] == '0') {
+            if (line[0] == '\0') {
                 break;
             }
-            std::istringstream iss(line);
-            iss >> u;
-            // std::cout << u << " ";
-            --u;
+            // std::cout << "line: " << line << '\n';
+            std::stringstream iss(line);
+            iss >> u >> c >> m >> c;
             while (iss >> v) {
                 // std::cout << " " << v;
-                add_edge(u, --v);
+                add_edge(u, v, true);
             }
             // std::cout << "\n";
         }
-        // print_graph(1);
+        // print_graph();
     }
 
     void articulation(int u) {
@@ -77,40 +81,38 @@ namespace cp {
         for (int v: g[u]) {
             if (dfs_num[v] == UNIVISITED) {
                 dfs_parent[v] = u;
-                if (u == dfs_root) {
-                    ++root_children;
-                }
                 articulation(v);
-
-                if (dfs_low[v] >= dfs_num[u]) {
-                    articulation_vertex[u] = true;
+                if (dfs_low[v] > dfs_num[u]) {
+                    articulation_bridge.push_back(
+                        {std::min(u, v), std::max(u,v)});
                 }
                 dfs_low[u] = std::min(dfs_low[u], dfs_low[v]);
             }
             else if (v != dfs_parent[u]) {
                 dfs_low[u] = std::min(dfs_low[u], dfs_num[v]);
             }
-        
         }
     }
 
     void solve() {
         for (int i = 0; i < n; ++i) {
             if (dfs_num[i] == UNIVISITED) {
-                dfs_root = i;
-                root_children = 0;
                 articulation(i);
-                articulation_vertex[dfs_root] = (root_children > 1);
             }
         }
-        answer = std::accumulate(
-            articulation_vertex.begin(),
-            articulation_vertex.end(), 0);
+        std::sort(
+            articulation_bridge.begin(),
+            articulation_bridge.end());
     }
     
     void print_output() {
-        std::cout << answer << '\n';
-
+        std::cout << articulation_bridge.size() << " critical links\n";
+        for (auto& e: articulation_bridge) {
+            std::cout << e.first;
+            std::cout << " - ";
+            std::cout << e.second << '\n';
+        }
+        std::cout << '\n';
     }
 
 
@@ -122,10 +124,11 @@ namespace cp {
     }
     
     void run() {
-        for ( ; ; ) {
+        // int T = 1; 
+        // std::cin >> T;
+        while ( std::cin >> n ) {
             // std::cout << "Case " << (i+1) << ":\n";
-            std::cin >> n;
-            if (!n) break;
+            
             one_loop();
         }
     }
@@ -140,7 +143,7 @@ int main() {
 
 /*
 Run: 
-g++ uva_315.cpp && ./a < test_cases/uva_315_1_in.txt
+g++ uva_796.cpp && ./a < test_cases/uva_796_1_in.txt
 
 Test Case: 1
 Input:
